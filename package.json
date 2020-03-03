@@ -1,0 +1,19 @@
+{
+  "name": "handyman",
+  "version": "1.0.0",
+  "description": "Handy Man Is an application designed to meet requirement of clients who need quick access to artisans and technicians who can carry out house maintenance and repair services at any time of the day.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "handy",
+    "man",
+    "artisan",
+    "app",
+    "repairs",
+    "maintenance"
+  ],
+  "author": "Kennedy Egwuda",
+  "license": "ISC"
+}
