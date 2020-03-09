@@ -10,14 +10,14 @@ $mysqli->select_db('handyman_8791');
 
 //sql statement to create a table
     $table = "CREATE TABLE IF NOT EXISTS migrationTable (
-        userId INT(20) NOT NULL,
-        email VARCHAR(100) NOT NULL,
-        password VARCHAR(50) NOT NULL,
-        firstname VARCHAR(50) NOT NULL,
-        lastname VARCHAR(50) NOT NULL,
-        username VARCHAR(50) NOT NULL,
-        phone VARCHAR(20) NOT NULL,
-        sessionid VARCHAR(250),
+        `userId` INT(20) NOT NULL,
+        `email` VARCHAR(100) NOT NULL,
+        `password` VARCHAR(50) NOT NULL,
+        `firstname` VARCHAR(50) NOT NULL,
+        `lastname` VARCHAR(50) NOT NULL,
+        `username` VARCHAR(50) NOT NULL,
+        `phone` VARCHAR(20) NOT NULL,
+        `sessionid` VARCHAR(250),
         PRIMARY KEY(userId)
     )"; 
     

@@ -20,7 +20,28 @@ $csrf_token = $_SESSION['csrf_token'];
 
 <body>
     <div class="justify-content-center align-items-center row">
-    <div class="text-white text-center p-3 font-weight-bolder col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #C2185B;">Sign Up</div>
+        <div class="text-white text-center p-3 font-weight-bolder col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #C2185B;">Sign Up</div>
+    </div>
+    <?php
+    if (isset($_SESSION['error'])) {
+        $alert = $_SESSION['error'];
+        unset($_SESSION['error']);
+        $message = "alert alert-danger alert-dismissible text-center font-weight-bolder";
+        $closeAlert = "<a href='#' class='close' data-dismiss = 'alert' aria-label = 'close'>&times;</a>";
+    }elseif(isset($_SESSION['success'])){
+        $alert = $_SESSION['success'];
+        unset($_SESSION['success']);
+        $message = "alert alert-success alert-dismissible text-center font-weight-bolder";
+        $closeAlert = "<a href='#' class='close' data-dismiss = 'alert' aria-label = 'close'>&times;</a>";
+    } else {
+        $alert = "";
+        $message = "";
+        $closeAlert = "";
+    }
+    ?>
+    <div class="<?php echo $message; ?>">
+        <?php echo $closeAlert; ?>
+        <?php echo $alert; ?>
     </div>
     <div class="container">
         <div class="justify-content-center align-items-center row">
@@ -53,8 +74,8 @@ $csrf_token = $_SESSION['csrf_token'];
                     </div>
                     <div class="form-group">
                         <label class="col-form-label" for="phone">Phone</label>
-                        <input class="form-control" type="tel" pattern="[0-9]{4}[0-9]{3}[0-9]{4}" placeholder="09045231754" name="phone" require>
-                        
+                        <input class="form-control" type="tel" pattern="[0-9]{4}[0-9]{3}[0-9]{4}" placeholder="09045231754" name="phone" required>
+
                     </div>
                     <div class="form-group">
                         <input class="btn btn-lg btn-block text-white" style="background-color:#C2185B" type="submit" name="action" value="Sign up">
@@ -64,4 +85,5 @@ $csrf_token = $_SESSION['csrf_token'];
         </div>
     </div>
 </body>
+
 </html>

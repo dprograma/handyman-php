@@ -15,6 +15,7 @@ class Signup
 
     public function create($table, $url, $subject, $from, $password, $confirm, $email,  $list)
     {
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         //connect to mysqli database
         $mysqli = new mysqli('localhost', 'root', '', 'handyman_8791');
         //check if email already exists
@@ -26,8 +27,12 @@ class Signup
         if ($stmt->num_rows() > 0) {
             $stmt->close();
             $_SESSION['error'] = "Email already exists!";
+            $redirectUrl = "../../view/signup";
+            header("location:$redirectUrl");
         } elseif ($password != $confirm) {              //check if password
-            $_SESSION['error'] = "Password mismatch!"; //is same as re-enter
+            $_SESSION['error'] = "Password mismatch!";
+            $redirectUrl = "view/signup";
+            header("location:$redirectUrl"); //is same as re-enter
             $stmt->close();                                     //password
         } else {
             $stmt->close();
@@ -49,20 +54,23 @@ class Signup
                 // ini_set("auth_password", "7c789e78d8ef2a");
                 // ini_set("smtp_ssl", "auto");
                 // ini_set("sendmail_from", "from@example.com");
-                
+                $verify = sha1(time());
                 $message = "<p><strong>Welcome to HandyMan</strong></p>";
                 $message .= "<p> Please, click the link below to confirm your email. </p>";
-                $message .= "<p><a href='$url'>" . $url . "</a></p>";
+                $message .= "<p><a href='$url?verify=$verify'>" . $url . "?verify=" . $verify . "</a></p>";
                 $message = wordwrap($message, 70);
                 $headers = "MIME-Version: 1.0" . "\r\n";
                 $headers .= "Content-type: text/html;charset=UTF-8" . "\r\n";
                 $headers .= "From: <" . $from . ">" . "\r\n";
                 //if mail is sent, output a message in a session
                 if (mail($email, $subject, $message, $headers)) {
-                    $_SESSION['email_message'] = "A message has been sent to your email.";
+                    $_SESSION['success'] = "Sign up successful: A message has been sent to you to verify your email.";
+                    $_SESSION['verify'] = $verify;
+                    $redirectUrl = "view/signup/";
+                    header("location:$redirectUrl");
                     $stmt->close();
                 } else {
-                    return;
+                    echo "error: email failed!";
                 }
             } else {
                 echo "error: insertion failed!";

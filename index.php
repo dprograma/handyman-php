@@ -29,14 +29,14 @@ if (!empty($_POST['csrf_token'])) {
                         $lastname = filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                        $confirm = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                        $confirm = filter_input(INPUT_POST, 'confirm', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL, FILTER_VALIDATE_EMAIL);
                         $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_NUMBER_INT);
                         $start = 100000;
                         $end = 10000000;
                         $userId = rand($start,$end);
                         $table = "migrationTable";
-                        $url = "handyman.com";
+                        $url = "http://localhost/handyman-php/view/account/";
                         $from = "info@handyman.com";
                         $subject = "User Registration";
 
@@ -48,7 +48,7 @@ if (!empty($_POST['csrf_token'])) {
                     case 'Sign in':
 
                         include 'src/classes/Signin.php';
-                        include 'src/config/migration/Migration.php';
+                        include 'src/config/db/Connect.php';
 
                         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL, FILTER_VALIDATE_EMAIL);
                         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -56,7 +56,7 @@ if (!empty($_POST['csrf_token'])) {
                         $url = "handyman.com/account/";
 
                         $signin = new Signin();
-                        $signin->signin($table, $email, $password, $url);
+                        $signin->login($table, $email, $password, $url);
 
                         break;
 

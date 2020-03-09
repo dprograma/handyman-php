@@ -7,13 +7,14 @@ class Signin
     public $table;
     public $url;
 
-    public function signin($table, $email, $password, $url)
+    public function login($table, $email, $password, $url)
     {
-        session_start();
+        
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         //connect to mysql database server
         $mysqli = new mysqli('localhost', 'root', '', 'handyman_8791');
 
-        $sql = "SELECT * FROM " . $table . "WHERE email = ? AND password = ?";
+        $sql = "SELECT * FROM " . $table . " WHERE `email` = ? AND `password` = ?";
         $stmt = $mysqli->prepare($sql);
         $stmt->bind_param('ss', $email, $password);
         $stmt->execute();
@@ -21,7 +22,7 @@ class Signin
         if ($stmt->num_rows() > 0) {
             //store session id in database if successfully logged in
             $sessionid = session_id();
-            $sql = "UPDATE " . $table . "SET `sessionid` = ? WHERE `email` = ?";
+            $sql = "UPDATE " . $table . " SET `sessionid` = ? WHERE `email` = ?";
             $stmt = $mysqli->prepare($sql);
             $stmt->bind_param('ss', $sessionid, $email);
             $stmt->execute();
@@ -32,7 +33,9 @@ class Signin
                 echo "session not saved.";
             }
         } else {
-            $_SESSION['error'] = "Username or Email error.";
+            $_SESSION['error'] = "Invalid username or Email.";
+            $redirectToSelf = "view/login/";
+            header("Location:$redirectToSelf");
             $stmt->close();
         }
     }
