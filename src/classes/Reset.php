@@ -22,6 +22,7 @@ class Reset
         $stmt = $mysqli->prepare($sql);
         $stmt->bind_param('s', $email);
         $stmt->execute();
+        $stmt->store_result();
         if ($stmt->num_rows() > 0) {
             //create a string token and store in a session
             $token = bin2hex(random_bytes(32));
@@ -39,7 +40,7 @@ class Reset
             if (mail($email, $subject, $message, $headers)) {
                 $_SESSION['email_message'] = "A message has been sent to your email.";
                 $stmt->close();
-                $url = "../../view/sendemail/";
+                $url = "view/sendemail/";
                 header("location:$url");
             } else {
                 echo "error sending email";
@@ -65,6 +66,7 @@ class Reset
         $stmt = $mysqli->prepare($sql);
         $stmt->bind_param('s', $email);
         $stmt->execute();
+        $stmt->store_result();
 
         if ($stmt->num_rows() > 0) {
             //update the table with the password and email sent
@@ -72,6 +74,7 @@ class Reset
             $stmt = $mysqli->prepare($sql);
             $stmt->bind_param('ss', $password, $email);
             $stmt->execute();
+            $stmt->store_result();
 
             if ($stmt->num_rows() > 0) {
                 $_SESSION['success'] = "Password reset is successful.";

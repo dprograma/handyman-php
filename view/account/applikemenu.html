@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width minimum-scale=1.0 maximum-scale=1.0 user-scalable=no" />
+        <title>My webpage</title>
+        <link href="../../assets/css/mmenu-js-master/dist/mmenu.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div id="my-page">
+            <div id="my-header">
+                <a href="#my-menu">Open the menu</a>
+                <nav id="my-menu">
+                    <ul>
+                        <li class="active"><a href="/">Home</a></li>
+                        <li><span>About us</span>
+                            <ul>
+                                <li><a href="/about/history/">History</a></li>
+                                <li><a href="/about/team/">The team</a></li>
+                                <li><a href="/about/address/">Our address</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/contact/">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div id="my-content">
+                <h1>The title</h1>
+                <p>Some content</p>
+            </div>
+        </div>
+
+        <script src="../../assets/css/mmenu-js-master/dist/mmenu.js"></script>
+        <script>
+            Mmenu.configs.classNames.selected = "active";
+            Mmenu.configs.offCanvas.page.selector = "#my-page";
+
+            document.addEventListener(
+                "DOMContentLoaded", () => {
+                    const menu = new Mmenu( "#my-menu", {
+                        slidingSubmenus: false,
+                        extensions: ["theme-dark"]
+                    });
+                }
+            );
+        </script>
+    </body>
+</html>

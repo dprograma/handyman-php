@@ -10,17 +10,28 @@ $csrf_token = $_SESSION['csrf_token'];
 <html>
 
 <head>
-    <title>Send Mail</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap.css">
-    <script type="text/javascript" src="../../assets/js/jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../../assets/js/bootstrap.js"></script>
+    <?php include "../../view/__partials/head.php"; ?>
 </head>
 
-<body>
+<body class="gradient">
     <div class="justify-content-center align-items-center row">
     <div class="text-white text-center p-3 font-weight-bolder col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #C2185B;">Reset Password</div>
+    <?php
+    if (isset($_SESSION['error'])) {
+        $error = $_SESSION['error'];
+        unset($_SESSION['error']);
+        $message = "alert alert-danger alert-dismissible text-center font-weight-bolder";
+        $closeAlert = "<a href='#' class='close' data-dismiss = 'alert' aria-label = 'close'>&times;</a>";
+    } else {
+        $error = "";
+        $message = "";
+        $closeAlert = "";
+    }
+    ?>
+    <div class="<?php echo $message; ?>">
+        <?php echo $closeAlert; ?>
+        <?php echo $error; ?>
+    </div>
     </div>
     <div class="container">
         <div class="justify-content-center align-items-center row">
@@ -29,7 +40,7 @@ $csrf_token = $_SESSION['csrf_token'];
                     <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
                     <div class="form-group">
                         <label class="col-form-label" for="email">Email</label>
-                        <input class="form-control" type="email" name="email" required>
+                        <input class="form-control border-right-0 border-left-0 border-top-0 border-rounded-0 rounded-0 shadow-none gradient" type="email" name="email" required>
                     </div>
                     <div class="form-group">
                         <input class="btn btn-lg btn-block text-white" style="background-color:#C2185B" type="submit" name="action" value="Change password">

@@ -1,26 +1,31 @@
 <?php
 
-session_start();
-
-if (isset($_GET['verify'])) {
-    $verify = $_GET['verify'];
-    unset($_GET['verify']);
-
-    if(isset($_SESSION['verify'])){
-        $session_verify = $_SESSION['verify'];
-        unset($_SESSION['verify']);
-    }
-    if(hash_equals($verify,$session_verify)){
+include "../__partials/topmenu.php";
+include "../../src/config/db/Connect.php";
 ?>
-    <html>
-        <head></head>
-        <body>
-            <div>This is the user account</div>
-        </body>
-    </html>
-<?php
-    }
-} else {
-    $verify = "";
-}
+<div class="container">
+    <div class="row d-flex flex-row">
+        <?php
+        $stmt = $mysqli->prepare("SELECT DISTINCT `category` FROM requestTable");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($rows = $result->fetch_assoc()) {
+            echo "<div class='col-6 mt-3 mb-3'>";
+            echo "<div class='card shadow'><a href='../../view/category/?cat=" . base64_encode($rows['category']) . "' style='text-decoration:none;'>
+                        <img height='120px' class='card-img-top'  src='" . "../../assets/images/categories/" . str_replace(' ', '_', trim(strtolower($rows['category']))) . ".png" . "' alt='" . $rows['category'] . "'>
+                    </div>";
+            echo "<p class='card-text text-center font-weight-bold'>" . str_replace('_', ' ', $rows['category']) . "</p>";
+            echo "</div>";
+        }
+        ?>
+    </div>
+</div>
+</div>
+</div>
 
+<?php
+include "../__partials/bottommenu.php";
+//     }
+// } else {
+//     $verify = "";
+// }

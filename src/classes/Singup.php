@@ -23,6 +23,7 @@ class Signup
         $stmt = $mysqli->prepare($sql);
         $stmt->bind_param('s', $email);
         $stmt->execute();
+        $stmt->store_result();
         //if email already exists output a message in a session
         if ($stmt->num_rows() > 0) {
             $stmt->close();
@@ -45,6 +46,7 @@ class Signup
             $sql .= ")";
             $stmt = $mysqli->prepare($sql);
             $stmt->execute();
+            $stmt->store_result();
             //if insert works send an email to user
             if ($stmt->affected_rows > 0) {
 
@@ -64,7 +66,7 @@ class Signup
                 $headers .= "From: <" . $from . ">" . "\r\n";
                 //if mail is sent, output a message in a session
                 if (mail($email, $subject, $message, $headers)) {
-                    $_SESSION['success'] = "Sign up successful: A message has been sent to you to verify your email.";
+                    $_SESSION['success'] = "Sign up successful: A message has been sent to you to verify your email account.";
                     $_SESSION['verify'] = $verify;
                     $redirectUrl = "view/signup/";
                     header("location:$redirectUrl");
