@@ -8,7 +8,7 @@ if (!empty($_REQUEST['request'])) {
     include "../../view/__partials/displaysuccess.php";
     include "../../view/__partials/displayerror.php";
     if (isset($firstname) || isset($lastname) || isset($phone) || isset($email) || isset($address)) {
-        $style = "color:darkslategrey !important";
+        $style = "color: darkolivegreen !important";
     } else {
         $style = "";
     }
@@ -18,19 +18,16 @@ if (!empty($_REQUEST['request'])) {
     $_SESSION['request'] = $row['request'];
     $_SESSION['price'] = $row['price'];
     $_SESSION['amount'] = $row['amount'];
+    $_SESSION['logistics'] = $row['logistics'];
     $_SESSION['tax'] = $row['tax'];
-
-    if (empty($_SESSION['csrf_token'])) {
-        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-    }
-    $csrf_token = $_SESSION['csrf_token'];
 ?>
     <div class="container justify-content-center align-items-center">
         <div class="row">
             <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
                 <form action="../../index.php" method="POST" class="valign">
                     <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-                    <div class="text-center mt-4 font-weight-bold">Confirm User Info</div><hr/>
+                    <div class="text-center mt-4 font-weight-bold">Confirm User Info</div>
+                    <hr />
                     <div class="form-group">
                         <label class="col-form-label" for="firstname">Firstname</label>
                         <input class="form-control border-right-0 border-left-0 border-top-0 border-rounded-0 rounded-0 shadow-none gradient" type="text" name="firstname" id="firstname" value="<?php echo $firstname; ?>" style="<?php echo $style; ?>" required>

@@ -31,58 +31,67 @@ if (isset($_SERVER['REQUEST_METHOD'])) {
                 if ($row['updated'] == 1) {
                     $_SESSION['error'] = "Update limit reached.";
                     header("location:$redirect");
+                    exit;
                 } else {
-                    for ($x = 1; $x <= 25; $x++) {
-                        if (!empty($_POST[$x])) {
-                            $sql = "UPDATE requestTable SET `updated` = 1, `request` = '" . $_POST[$x] . "' WHERE `category` = '$category' AND `fieldname` = '$x'";
-                            $mysqli->query($sql) or die($mysqli->error);
-                            echo $sql;
-                            exit;
-                        }
-                    }
-                    $target_dir = "../../../assets/images/categories/";
-                    $target_file = $target_dir . basename($_FILES['image']['name']);
-                    $uploadOk = 1;
-                    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-                    $imageName = $target_dir . $category . "." . $imageFileType;
-                    // Check if image file is a actual image or fake image
-                    $check = getimagesize($_FILES["image"]["tmp_name"]);
-                    if ($check !== false) {
-                        $uploadOk = 1;
-                    } else {
-                        $uploadOk = 0;
-                    }
 
-                    // Check file size
-                    if ($_FILES["image"]["size"] > 500000) {
-                        $_SESSION['error'] = "Sorry, your file is too large.";
-                        $uploadOk = 0;
-                        header("location:$redirect");
-                    }
-                    // Allow certain file formats
-                    if (
-                        $imageFileType != "png"
-                    ) {
-                        $_SESSION['error'] = "Sorry, PNG files are allowed.";
-                        $uploadOk = 0;
-                        header("location:$redirect");
-                    }
-                    // Check if $uploadOk is set to 0 by an error
-                    if ($uploadOk == 0) {
-                        $_SESSION['error'] = "Sorry, your file was not uploaded.";
-                        header("location:$redirect");
-                        // if everything is ok, try to upload file
-                    } else {
-                        if (move_uploaded_file($_FILES["image"]["tmp_name"], $imageName)) {
-                            $_SESSION['success'] = "The file " . basename($_FILES["image"]["name"]) . " has been uploaded.";
-                            header("location:$redirect");
-                        } else {
-                            $_SESSION['error'] = "Sorry, there was an error uploading your file.";
-                            header("location:$redirect");
+                    foreach ($_POST as $key => $value) {
+                        $sql = "UPDATE requestTable SET `updated` = 1, `request` = '" . $value . "' WHERE `category` = '$category' AND `fieldname` = '$key'";
+                        $mysqli->query($sql);
+                        if ($key > 20) {
+                            if (!empty($value)) {
+                                $sql = "INSERT INTO requestTable (category,fieldname,request) VALUES('$category','$key','$value')";
+                                $mysqli->query($sql);
+                            }
                         }
                     }
                 }
+
+                $target_dir = "../../../assets/images/categories/";
+                $target_file = $target_dir . basename($_FILES['image']['name']);
+                $uploadOk = 1;
+                $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+                $imageName = $target_dir . $category . "." . $imageFileType;
+                // Check if image file is a actual image or fake image
+                $check = getimagesize($_FILES["image"]["tmp_name"]);
+                if ($check !== false) {
+                    $uploadOk = 1;
+                } else {
+                    $uploadOk = 0;
+                }
+
+                // Check file size
+                if ($_FILES["image"]["size"] > 500000) {
+                    $_SESSION['error'] = "Sorry, your file is too large.";
+                    $uploadOk = 0;
+                    header("location:$redirect");
+                    exit;
+                }
+                // Allow certain file formats
+                if (
+                    $imageFileType != "png"
+                ) {
+                    $_SESSION['error'] = "Sorry, only PNG files are allowed.";
+                    $uploadOk = 0;
+                    header("location:$redirect");
+                    exit;
+                }
+                //Check if $uploadOk is set to 0 by an error
+                if ($uploadOk == 0) {
+                    $_SESSION['error'] = "Sorry, your file was not uploaded.";
+                    header("location:$redirect");
+                    // if everything is ok, try to upload file
+                } else {
+                    if (move_uploaded_file($_FILES["image"]["tmp_name"], $imageName)) {
+                        $_SESSION['success'] = "The file " . basename($_FILES["image"]["name"]) . " has been uploaded.";
+                        header("location:$redirect");
+                    } else {
+                        $_SESSION['error'] = "Sorry, no image file uploaded.";
+                        header("location:$redirect");
+                    }
+                }
+
                 break;
+
             case 'Delete':
                 session_start();
                 if (isset($_GET['category'])) {
@@ -136,14 +145,16 @@ if (isset($_SERVER['REQUEST_METHOD'])) {
                         $_SESSION['error'] = "Sorry, your file is too large.";
                         $uploadOk = 0;
                         header("location:$redirect");
+                        exit;
                     }
                     // Allow certain file formats
                     if (
                         $imageFileType != "png"
                     ) {
-                        $_SESSION['error'] = "Sorry, PNG files are allowed.";
+                        $_SESSION['error'] = "Sorry, only PNG files are allowed.";
                         $uploadOk = 0;
                         header("location:$redirect");
+                        exit;
                     }
                     // Check if $uploadOk is set to 0 by an error
                     if ($uploadOk == 0) {

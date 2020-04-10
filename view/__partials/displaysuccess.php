@@ -1,3 +1,8 @@
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#success").fadeIn().delay(5000).fadeOut();
+});
+</script>
 <?php
     if (isset($_SESSION['success'])) {
         $success = $_SESSION['success'];
@@ -10,7 +15,7 @@
         $closeAlert = "";
     }
     ?>
-    <div class="<?php echo $message; ?>">
+    <div id="success" class="<?php echo $message; ?>">
         <?php echo $closeAlert; ?>
         <?php echo $success; ?>
     </div>

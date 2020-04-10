@@ -12,6 +12,11 @@ session_start();
 //     }
 //     if (hash_equals($verify, $session_verify)) {
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+$csrf_token = $_SESSION['csrf_token'];
+
 if (isset($_SESSION['userid'])) {
     $userid = $_SESSION['userid'];
     //unset($_SESSION['userid']);
@@ -146,7 +151,7 @@ echo "Categories";
                                                         echo '../../view/login/';
                                                     } ?>">Home</a></li>
                         <li><span><a href="<?php if ($loggedin == 1) {
-                                                echo '../../view/customer/';
+                                                echo '../../view/customer/?action=' . base64_encode('Customer Request');
                                             } else {
                                                 echo '../../view/login/';
                                             } ?>">My Request</a></span>

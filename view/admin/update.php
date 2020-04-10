@@ -56,7 +56,7 @@ include "../../view/__partials/displayerror.php";
                 while ($rows = $stmt->fetch_assoc()) {
                 ?>
                     <div class="input-group mb-3" id="wrapper">
-                        <input type="text" class="form-control rounded-0" name="<?php echo $rows['fieldname']; ?>" id="" value="<?php echo $rows['request']; ?>" disabled><span class='remove-field'><i class='fa fa-times'></i></span>
+                        <input type="text" class="form-control rounded-0" name="<?php echo $rows['fieldname']; ?>" id="<?php echo $rows['fieldname']; ?>" value="<?php echo $rows['request']; ?>" ><span class='remove-field'><i class='fa fa-times'></i></span>
                     </div>
                 <?php
                 }

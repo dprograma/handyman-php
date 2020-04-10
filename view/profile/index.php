@@ -35,9 +35,9 @@ if (isset($_GET['profile'])) {
                 <form action="../../index.php" method="POST" enctype="multipart/form-data">
                     <div>
                         <img id="pix" src="../../assets/images/profileimg/<?php echo $imagefile; ?>" width="200px" style="position: relative; margin:20px;border-radius: 50%;">
-                        <label for="image" class="">
+                        <label for="image" class="d-flex justify-content-center">
                             <input type="file" name="image" id="image" style="display: none;">
-                            <img id="photo" src="../../assets/images/camera.png" width="90px" style="position: absolute; margin:20px; left: 100px; top: 165px;opacity:0.6;">
+                            <img id="photo" src="../../assets/images/camera.png" width="90px" style="position: absolute; margin:20px; top: 145px; opacity:0.6;">
                         </label>
 
                     </div>

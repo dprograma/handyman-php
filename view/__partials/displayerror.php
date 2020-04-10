@@ -1,3 +1,8 @@
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#error").fadeIn().delay(5000).fadeOut();
+});
+</script>
 <?php
     if (isset($_SESSION['error'])) {
         $error = $_SESSION['error'];
@@ -10,7 +15,7 @@
         $closeAlert = "";
     }
     ?>
-    <div class="<?php echo $message; ?>">
+    <div id="error" class="<?php echo $message; ?>">
         <?php echo $closeAlert; ?>
         <?php echo $error; ?>
     </div>

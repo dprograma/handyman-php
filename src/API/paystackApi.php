@@ -25,7 +25,7 @@ $err = curl_error($curl);
 
 if($err){
   // there was an error contacting the Paystack API
-  die('Curl returned error: ' . $err);
+  die('Error: ' . $err);
 }
 
 $tranx = json_decode($response, true);

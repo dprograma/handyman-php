@@ -15,7 +15,7 @@ $csrf_token = $_SESSION['csrf_token'];
 
 <body class="gradient">
     <div class="justify-content-center align-items-center row">
-    <div class="text-white text-center p-3 font-weight-bolder col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #C2185B;">Reset Password</div>
+    <div class="text-white text-center p-3 font-weight-bolder col-lg-12 col-md-12 col-sm-12 col-xs-12 row" style="background-color: #C2185B;"><div class="col-4 text-left"><a href="#" onClick="javascript:window.history.back();"><img src="../../assets/images/arrow.png" alt="back" width="50px"></a></div><div class="col-8 text-left">Password Reset</div></div></div>
     <?php
     if (isset($_SESSION['error'])) {
         $error = $_SESSION['error'];

@@ -59,6 +59,7 @@ $table = "CREATE TABLE IF NOT EXISTS customerRequestTable(
         `unitprice` DECIMAL,
         `amount` DECIMAL,
         `tax` FLOAT,
+        `completed` INT(10) NOT NULL DEFAULT '0',
         PRIMARY KEY(customerrequestId)
     )";
 

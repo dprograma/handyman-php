@@ -36,7 +36,7 @@ if (!empty($_REQUEST['csrf_token'])) {
                         $end = 10000000;
                         $userId = rand($start, $end);
                         $table = "migrationTable";
-                        $url = "http://localhost/handyman-php/view/account/";
+                        $url = "http://" . $_SERVER['HTTP_SERVER'] . "/handyman-php/view/account/";
                         $from = "info@handyman.com";
                         $subject = "User Registration";
 
@@ -68,7 +68,7 @@ if (!empty($_REQUEST['csrf_token'])) {
 
                         $table = "migrationTable";
                         $subject = "Password Reset";
-                        $url = "handyman.com/reset/";
+                        $url = "http://" . $_SERVER['HTTP-SERVER'] . "/handyman.com/reset/";
                         $from = "info@handyman.com";
 
                         $reset = new Reset();
@@ -138,8 +138,8 @@ if (!empty($_REQUEST['csrf_token'])) {
                         $price = $_SESSION['price'];
                         $amount = $_SESSION['amount'];
                         $tax = $_SESSION['tax'];
-                        $orderdate = date('d-m-Y h:i:s');
-                        $returndate = date('d-m-Y h:i:s');
+                        $orderdate = date('Y-m-d h:i:s');
+                        $returndate = date('Y-m-d h:i:s');
                         $qty = 1;
 
                         $redirect = "view/cart/";
@@ -198,6 +198,18 @@ if (!empty($_REQUEST['csrf_token'])) {
                             $_SESSION['error'] = "Error updating your details.";
                             exit;
                         }
+
+                    case 'Job Completed':
+                        include "src/config/db/Connect.php";
+
+                        $id = $_POST['customerid'];
+                        $completed  = 1;
+                        $stmt = $mysqli->query("UPDATE customerRequestTable SET `completed` = $completed WHERE `customerrequestId` = $id");
+                        $_SESSION['success'] = "Job completed!";
+                        $redirect = "view/customer/";
+                        header("location:$redirect");
+
+                        break;
 
                         break;
 
