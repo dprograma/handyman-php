@@ -36,7 +36,7 @@ if (!empty($_REQUEST['csrf_token'])) {
                         $end = 10000000;
                         $userId = rand($start, $end);
                         $table = "migrationTable";
-                        $url = "http://" . $_SERVER['HTTP_SERVER'] . "/handyman-php/view/account/";
+                        $url = "http://localhost/handyman-php/view/account/";
                         $from = "info@handyman.com";
                         $subject = "User Registration";
 
@@ -68,8 +68,10 @@ if (!empty($_REQUEST['csrf_token'])) {
 
                         $table = "migrationTable";
                         $subject = "Password Reset";
-                        $url = "http://" . $_SERVER['HTTP-SERVER'] . "/handyman.com/reset/";
+                        $url = "http://localhost/handyman-php/view/reset/";
                         $from = "info@handyman.com";
+
+                        $_SESSION['resetemail'] = $email;
 
                         $reset = new Reset();
                         $reset->sendMail($table, $subject, $url, $from, $email);
@@ -78,24 +80,23 @@ if (!empty($_REQUEST['csrf_token'])) {
 
                     case 'Reset':
 
-                        //create a session
-                        session_start();
-
                         //check if email token match
-                        if (!empty($_GET['email_token'])) {
-                            if (hash_equals($_SESSION['email_token'], $_GET['email_token'])) {
+                        if (!empty($_REQUEST['email_token'])) {
+                            if (hash_equals($_SESSION['email_token'], $_REQUEST['email_token'])) {
                                 //autoload php files include
                                 include 'src/classes/Reset.php';
-
                                 //declare variables and sanitize them
                                 $table = "migrationTable";
                                 $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                                 $confirm = filter_input(INPUT_POST, 'confirm', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
+                                $email = $_SESSION['resetemail'];
+
+                                $url = "view/reset/";
                                 //check if password and confirm password match
                                 if ($password == $confirm) {
                                     $reset = new Reset();
-                                    $reset->update($table, $email, $password);
+                                    $reset->update($table, $email, $password,$url);
                                 } else {
                                     $_SESSION['error'] = "Password mismatch!";
                                 }

@@ -63,10 +63,10 @@ $csrf_token = $_SESSION['csrf_token'];
                     </div>
                 </form>
                 <div class="justify-content-center align-items-center font-weight-bolder p-2 row">
-                    <div class="text-center">Not registered? <a href="../signup/">Sign up</a></div>
+                    <div class="text-center">Not registered? <a href="../signup/" class="text-decoration-none">Sign up</a></div>
                 </div>
                 <div class="justify-content-center align-items-center font-weight-bolder p-2 row">
-                    <div class="text-center"><a href="../sendemail/">Forgot password?</a></div>
+                    <div class="text-center"><a href="../sendemail/" class="text-decoration-none">Forgot password?</a></div>
                 </div>
 
             </div>

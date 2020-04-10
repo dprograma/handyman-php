@@ -38,7 +38,7 @@ class Reset
             $headers .= "Content-type: text/html;charset=UTF-8" . "\r\n";
             $headers .= "From: <" . $from . ">" . "\r\n";
             if (mail($email, $subject, $message, $headers)) {
-                $_SESSION['email_message'] = "A message has been sent to your email.";
+                $_SESSION['success'] = "A message has been sent to your email.";
                 $stmt->close();
                 $url = "view/sendemail/";
                 header("location:$url");
@@ -49,16 +49,13 @@ class Reset
             echo "Update failed.";
             $stmt->close();
         } else {
-            $_SESSION['email_error'] = "Email does not exist!";
+            $_SESSION['error'] = "Email does not exist!";
             $stmt->close();
         }
     }
 
-    public function update($table, $email, $password)
+    public function update($table, $email, $password, $url)
     {
-        //start a session
-        session_start();
-
         //load file for mysqli connection to database
         $mysqli = new mysqli('localhost', 'root', '', 'handyman_8791');
         //check if password to be reset already exist
@@ -69,6 +66,7 @@ class Reset
         $stmt->store_result();
 
         if ($stmt->num_rows() > 0) {
+            $stmt->close();
             //update the table with the password and email sent
             $sql = "UPDATE " . $table . " SET `password` = ? WHERE `email` = ?";
             $stmt = $mysqli->prepare($sql);
@@ -76,8 +74,9 @@ class Reset
             $stmt->execute();
             $stmt->store_result();
 
-            if ($stmt->num_rows() > 0) {
+            if ($stmt) {
                 $_SESSION['success'] = "Password reset is successful.";
+                header("location:$url");
             } else {
                 return;
             }

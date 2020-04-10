@@ -12,6 +12,10 @@ $csrf_token = $_SESSION['csrf_token'];
 <head>
     <?php include "../../view/__partials/head.php"; ?>
 </head>
+<?php
+include "../../view/__partials/displaysuccess.php";
+include "../../view/__partials/displayerror.php";
+?>
 
 <body class="gradient">
     <div class="justify-content-center align-items-center row">
